@@ -1,33 +1,46 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import Gif from './components/Gif/Gif';
+import Form from './components/Form/Form';
 
 function App() {
   const [gifResult, setGifResult] = useState(null);
-  const [query, setQuery] = useState('');
 
-  // const queryURL = `https://api.giphy.com/v1/gifs/search?api_key=IFaymHtOsBWgBhpjLYNnaPMTS2mG0eQb&q=${query}`;
-
-  async function giphyRandomAPICall(url) {
+  async function giphyRandomAPICall() {
     try {
-      const res = await fetch(url);
+      const res = await fetch(
+        'https://api.giphy.com/v1/gifs/random?api_key=IFaymHtOsBWgBhpjLYNnaPMTS2mG0eQb'
+      );
       const data = await res.json();
-      console.log(typeof data);
-      setGifResult(data);
+      setGifResult(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function giphySearchAPICall(query) {
+    try {
+      const res = await fetch(
+        `https://api.giphy.com/v1/gifs/search?api_key=IFaymHtOsBWgBhpjLYNnaPMTS2mG0eQb&q=${query}`
+      );
+      const data = await res.json();
+      let random = Math.floor(Math.random() * 50);
+      setGifResult(data.data[random]);
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    giphyRandomAPICall(
-      'https://api.giphy.com/v1/gifs/random?api_key=IFaymHtOsBWgBhpjLYNnaPMTS2mG0eQb'
-    );
+    giphyRandomAPICall();
   }, []);
 
   return (
     <div className='App'>
-      {gifResult && <Gif gifData={gifResult} random={true} />}
+      <h1>Giphy</h1>
+      <Form giphySearchAPICall={giphySearchAPICall} />
+      <button onClick={giphyRandomAPICall}>New Random Gif</button>
+      {gifResult && <Gif gifData={gifResult} />}
     </div>
   );
 }
