@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import Gif from './components/Gif/Gif';
 import Form from './components/Form/Form';
+import Button from './components/Button/Button';
 
 function App() {
   const [gifResult, setGifResult] = useState(null);
@@ -39,7 +40,7 @@ function App() {
     <div className='App'>
       <h1>Giphy</h1>
       <Form giphySearchAPICall={giphySearchAPICall} />
-      <button onClick={giphyRandomAPICall}>New Random Gif</button>
+      <Button text='New Random Gif' onClickFunction={giphyRandomAPICall} />
       {gifResult && <Gif gifData={gifResult} />}
     </div>
   );

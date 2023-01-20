@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Form.css';
+import Button from '../Button/Button';
 
 export default function Form({ giphySearchAPICall }) {
   const [giphyType, setGiphyType] = useState('');
@@ -10,6 +11,7 @@ export default function Form({ giphySearchAPICall }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setGiphyType('');
     giphySearchAPICall(giphyType);
   }
 
@@ -21,7 +23,7 @@ export default function Form({ giphySearchAPICall }) {
         name='type'
         onChange={handleChange}
       />
-      <button type='submit'>Find Gif</button>
+      <Button type='submit' text='Search for Gif' disable={!giphyType} />
     </form>
   );
 }
