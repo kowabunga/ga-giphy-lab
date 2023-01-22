@@ -11,7 +11,7 @@ export default function Form({ giphySearchAPICall }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setGiphyType('');
+    e.target.reset();
     giphySearchAPICall(giphyType);
   }
 
